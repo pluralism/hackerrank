@@ -10,10 +10,6 @@ for i in 0...t
     table[0][j] = [table[0][j], arr[0] + table[0][j - arr[0]]].max
   end
 
-  for i in 0...arr.length
-    table[i][0] = 0
-  end
-
   for i in 1...arr.length
     for j in 1..expected_sum
       if j < arr[i]
