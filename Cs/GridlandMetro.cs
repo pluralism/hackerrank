@@ -1,4 +1,13 @@
-static long MergeIntervals(List<Tuple<long, long>> intervals)
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+
+namespace HackerRank
+{
+    class Program
+    {
+        static long MergeIntervals(List<Tuple<long, long>> intervals)
         {
             long res = 0;
             if (intervals.Count == 1)
@@ -32,3 +41,26 @@ static long MergeIntervals(List<Tuple<long, long>> intervals)
 
             return res;
         }
+
+
+        static void Main(String[] args)
+        {
+            List<long> info = Console.ReadLine().Split(' ').Select(n => Int64.Parse(n)).ToList();
+            long totalCells = info[0] * info[1];
+            Dictionary<long, List<Tuple<long, long>>> intervals = new Dictionary<long, List<Tuple<long, long>>>();
+
+            for (long i = 0; i < info[2]; i++)
+            {
+                List<long> tmp = Console.ReadLine().Split(' ').Select(n => Int64.Parse(n)).ToList();
+                if (!intervals.ContainsKey(tmp[0]))
+                    intervals[tmp[0]] = new List<Tuple<long, long>>();
+                intervals[tmp[0]].Add(Tuple.Create(tmp[1], tmp[2]));
+            }
+
+            long occupied = 0;
+            foreach(long key in intervals.Keys)
+                occupied += MergeIntervals(intervals[key]);
+            Console.WriteLine(totalCells - occupied);
+        }
+    }
+}
