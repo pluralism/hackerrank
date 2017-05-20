@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 
+
 namespace HackerRank
 {
     class Program
@@ -27,8 +28,7 @@ namespace HackerRank
                         int newK = currentK - 2;
                         if (newK >= repNeed && newK >= 0)
                         {
-                            num[i] = '9';
-                            num[num.Length - i - 1] = '9';
+                            num[i] = num[num.Length - i - 1] = '9';
                             currentK = newK;
                         }
                     }
@@ -63,8 +63,7 @@ namespace HackerRank
                         int newK = currentK - toChange;
                         if(newK >= 0 && newK >= repNeed)
                         {
-                            num[i] = '9';
-                            num[num.Length - i - 1] = '9';
+                            num[i] = num[num.Length - i - 1] = '9';
                             currentK -= 2;
                         } else if(currentK - 1 >= 0 && currentK - 1 >= repNeed)
                         {
