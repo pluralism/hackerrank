@@ -13,7 +13,7 @@ int main() {
     int N, countA = 0, countC = 0, countT = 0, countG = 0;
     cin >> N;
     cin >> s;
-    N = N / 4;
+    N /= 4;
 
     for(int i = 0; i < s.length(); i++) {
         char c = s[i];
