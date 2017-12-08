@@ -1,5 +1,8 @@
+#ifndef HACKERRANK_CPP_EQUAL_STACKS_H
+#define HACKERRANK_CPP_EQUAL_STACKS_H
 #include <iostream>
 #include <unordered_set>
+#include <numeric>
 #include <vector>
 using namespace std;
 
@@ -20,16 +23,14 @@ template<typename T>
 unordered_set<T> create_set(T lim, vector<T> vec)
 {
     unordered_set<T> set1(lim);
-    int sum = 0;
-    for(auto x {vec.rbegin()}; x != vec.rend(); x++)
-    {
-        sum += *x;
-        set1.insert(sum);
-    }
+    accumulate(vec.rbegin(), vec.rend(), 0, [&](T a, T b) {
+        set1.insert(a + b);
+        return a + b;
+    });
     return set1;
 }
 
-int main(int argc, char **argv)
+int equal_stacks()
 {
     int_fast32_t n1, n2, n3;
     cin >> n1 >> n2 >> n3;
@@ -49,6 +50,7 @@ int main(int argc, char **argv)
             max = sum;
         }
     }
-    cout << max << '\n';
-    return 0;
+    return max;
 }
+
+#endif //HACKERRANK_CPP_EQUAL_STACKS_H
