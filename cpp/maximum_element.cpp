@@ -1,53 +1,53 @@
 #include <iostream>
-#include <stack>
+#include <unordered_set>
+#include <numeric>
+#include <vector>
 using namespace std;
 
-struct element_node {
-    long pos {};
-    long value {};
-
-    element_node(long pos, long value) : pos(pos), value(value) { }
-};
-
-ostream& operator<<(ostream& os, const element_node& el)
+template<typename T>
+vector<T> create_vec(T lim)
 {
-    os << el.value;
-    return os;
+    vector<T> vec(lim);
+    for(T i {0}; i < lim; i++)
+    {
+        T tmp;
+        cin >> tmp;
+        vec.push_back(tmp);
+    }
+    return vec;
+}
+
+template<typename T>
+unordered_set<T> create_set(T lim, vector<T> vec)
+{
+    unordered_set<T> set1(lim);
+    accumulate(vec.rbegin(), vec.rend(), 0, [&](T a, T b) {
+        set1.insert(a + b);
+        return a + b;
+    });
+    return set1;
 }
 
 int main(int argc, char **argv)
 {
-    stack<element_node> nums {};
-    stack<element_node> max_values {};
-    int N;
-    cin >> N;
-    for(int i = 0; i < N; i++)
+    int_fast32_t n1, n2, n3;
+    cin >> n1 >> n2 >> n3;
+
+    vector<int_fast32_t> vec1 {create_vec<int_fast32_t>(n1)};
+    vector<int_fast32_t> vec2 {create_vec<int_fast32_t>(n2)};
+    vector<int_fast32_t> vec3 {create_vec<int_fast32_t>(n3)};
+
+    unordered_set<int_fast32_t> set1 {create_set<int_fast32_t>(n1, vec1)};
+    unordered_set<int_fast32_t> set2 {create_set<int_fast32_t>(n2, vec2)};
+    int_fast32_t max {0}, sum {0};
+    for(auto x {vec3.rbegin()}; x != vec3.rend(); x++)
     {
-        int type;
-        cin >> type;
-        if(type == 1)
+        sum += *x;
+        if(set1.count(sum) > 0 && set2.count(sum) > 0)
         {
-            if(long num {}; cin >> num)
-            {
-                element_node element { i, num };
-                if(nums.empty() || num >= max_values.top().value)
-                {
-                    max_values.push(element);
-                }
-                nums.push(element);   
-            }
-        } else if(type == 2)
-        {
-            element_node top_node = nums.top();
-            if(top_node.pos == max_values.top().pos)
-            {
-                max_values.pop();
-            }
-            nums.pop();
-        } else if(type == 3)
-        {
-            cout << max_values.top() << '\n';
+            max = sum;
         }
     }
+    cout << max << '\n';
     return 0;
 }
